@@ -1,0 +1,348 @@
+﻿AgentRecon System Design Document
+
+Table of Contents
+1. Introduction
+   1.1 Purpose
+   1.2 Scope
+   1.3 Definitions and Acronyms
+2. System Overview
+   2.1 System Description
+   2.2 System Architecture
+   2.3 Technology Stack
+3. Component Details
+   3.1 Frontend Architecture
+   3.2 Backend Architecture
+   3.3 Database Design
+   3.4 AI Service
+4. Data Flow
+   4.1 Reconciliation Process Flow
+   4.2 Exception Handling Flow
+5. API Documentation
+   5.1 Endpoints
+   5.2 Request/Response Formats
+6. Deployment Architecture
+   6.1 Environment Setup
+   6.2 Deployment Process
+7. Security Considerations
+8. Future Enhancements
+
+1. Introduction
+
+1.1 Purpose
+The purpose of this document is to provide a comprehensive overview of the AgentRecon system architecture, components, and design decisions. This document serves as a reference for developers, system administrators, and other stakeholders involved in the development, maintenance, and enhancement of the AgentRecon system.
+
+1.2 Scope
+This document covers the technical architecture, component design, data flow, and integration points of the AgentRecon system. It includes details about both the frontend and backend components, database design, AI service integration, and deployment considerations.
+
+1.3 Definitions and Acronyms
+- AgentRecon: Intelligent Reconciliation Solution
+- API: Application Programming Interface
+- UI: User Interface
+- AI: Artificial Intelligence
+- RAG: Retrieval-Augmented Generation
+- KB: Knowledge Base
+- GL: General Ledger
+- AP: Accounts Payable
+- AR: Accounts Receivable
+
+2. System Overview
+
+2.1 System Description
+AgentRecon is an intelligent reconciliation solution designed to automate and streamline the process of reconciling financial transactions between different systems. The application leverages AI to match transactions, identify discrepancies, and suggest resolutions for exceptions. Key features include:
+
+- File upload and mapping for source and target systems
+- Automated reconciliation with AI-powered matching
+- Exception management and resolution
+- Dashboard with key performance indicators
+- Detailed reporting and analytics
+
+2.2 System Architecture
+AgentRecon follows a client-server architecture with a clear separation between the frontend and backend components:
+
+- Frontend: React-based single-page application (SPA)
+- Backend: Flask-based RESTful API server
+- Database: SQL database (PostgreSQL or SQLite)
+- Task Queue: Celery with Redis for background processing
+- AI Service: Azure OpenAI integration for intelligent matching
+
+The system is designed with modularity in mind, allowing components to be developed, tested, and deployed independently.
+
+2.3 Technology Stack
+Frontend:
+- React 19.1.0
+- React Router 7.5.0
+- CSS Modules for styling
+- React Modal 3.16.3
+
+Backend:
+- Python
+- Flask web framework
+- SQLAlchemy ORM
+- Flask-Migrate for database migrations
+- Celery for asynchronous task processing
+- Redis for message broker and result backend
+- LangChain for AI integration
+- Azure OpenAI for AI capabilities
+
+Database:
+- PostgreSQL (production)
+- SQLite (development/testing)
+
+3. Component Details
+
+3.1 Frontend Architecture
+The frontend is built using React and follows a component-based architecture. Key components include:
+
+- App: The root component that sets up routing and the overall application structure
+- Header: Navigation and branding
+- Pages:
+  - DashboardPage: Overview of reconciliation activities
+  - ReconciliationPage: Main reconciliation workflow
+  - ExceptionsPage: List of exceptions requiring resolution
+  - ExceptionDetailPage: Detailed view of a specific exception
+
+The frontend uses React Router for navigation and CSS Modules for component-specific styling. State management is handled through React's built-in hooks (useState, useEffect) for component-level state and context API for application-wide state when needed.
+
+Component Hierarchy:
+- App
+  - Header
+  - Routes
+    - DashboardPage
+      - MainContent
+        - KpiCards
+        - ActivityChart
+        - ExceptionManagement
+    - ReconciliationPage
+      - ReconciliationSidebar
+      - ReconciliationContent
+        - FileUpload
+        - FilterBar
+        - ActionBar
+        - TransactionTable
+    - ExceptionsPage
+      - ExceptionsContent
+        - FilterBar
+        - ExceptionsActionBar
+        - AiSuggestionsBar
+        - ExceptionsTable
+    - ExceptionDetailPage
+
+3.2 Backend Architecture
+The backend follows a modular architecture with clear separation of concerns:
+
+- Application Factory: Creates and configures the Flask application
+- Blueprints: Organize routes by feature
+- Models: Define database schema and relationships
+- Services: Contain business logic
+  - Reconciliation Service: Core reconciliation logic
+  - AI Service: Integration with Azure OpenAI
+- Tasks: Celery tasks for background processing
+- Config: Configuration settings
+
+The backend exposes a RESTful API that the frontend consumes. Authentication and authorization are handled through token-based mechanisms.
+
+3.3 Database Design
+The database schema includes the following key entities:
+
+- DataSourceMapping: Defines mappings between source/target file columns and internal semantic names
+  - id (PK)
+  - mapping_name
+  - source_type (enum: 'source' or 'target')
+  - column_mappings (JSON)
+  - date_format_string
+
+- ReconciliationJob: Represents a reconciliation job
+  - id (PK)
+  - source_file
+  - target_file
+  - knowledge_base_file
+  - status (enum: PENDING, PROCESSING, COMPLETED, FAILED)
+  - celery_task_id
+  - created_at
+  - completed_at
+  - results_summary (JSON)
+  - source_mapping_id (FK)
+  - target_mapping_id (FK)
+
+- ReconciliationResultItem: Individual result items from reconciliation
+  - id (PK)
+  - job_id (FK)
+  - display_id
+  - date
+  - description
+  - amount
+  - status
+  - action
+  - details (JSON)
+  - created_at
+
+- ExceptionLog: Records of exceptions that need resolution
+  - id (PK)
+  - job_id (FK)
+  - exception_id_display
+  - exception_type
+  - priority
+  - status
+  - details (JSON)
+  - created_at
+  - resolved_at
+  - resolution_notes
+
+Relationships:
+- ReconciliationJob has many ReconciliationResultItems (one-to-many)
+- ReconciliationJob has many ExceptionLogs (one-to-many)
+- ReconciliationJob references two DataSourceMappings (many-to-one)
+
+3.4 AI Service
+The AI service leverages Azure OpenAI and LangChain to provide intelligent matching capabilities:
+
+- Retrieval-Augmented Generation (RAG): Uses a knowledge base of reconciliation rules to guide the matching process
+- Vector Store: Indexes the knowledge base for efficient retrieval
+- Prompt Engineering: Carefully crafted prompts to guide the AI in making accurate matching decisions
+- Output Parsing: Structured output using Pydantic models
+
+The AI service evaluates transaction pairs and determines:
+- Match Status: Matched, Partial Match, or Exception
+- Exception Type: For non-matches, identifies the specific type of discrepancy
+- Reason: Explanation referencing specific knowledge base rules
+
+4. Data Flow
+
+4.1 Reconciliation Process Flow
+1. User uploads source and target files through the UI
+2. Files are saved to the server, and a ReconciliationJob record is created
+3. User initiates reconciliation process
+4. A Celery task is created to handle the reconciliation asynchronously
+5. The reconciliation service:
+   a. Parses the source and target files using the specified mappings
+   b. Identifies potential matches based on date and amount tolerances
+   c. For each potential match, calls the AI service to evaluate
+   d. Records the results (matches, partial matches, exceptions)
+6. The job status is updated to COMPLETED when finished
+7. The frontend polls for job status and displays results when available
+
+4.2 Exception Handling Flow
+1. Exceptions are identified during the reconciliation process
+2. Each exception is logged with details about the discrepancy
+3. Users can view exceptions in the Exceptions page
+4. For each exception, users can:
+   a. Review the details
+   b. Apply AI suggestions for resolution
+   c. Manually resolve the exception
+   d. Add resolution notes
+5. Resolved exceptions are marked as such and included in reports
+
+5. API Documentation
+
+5.1 Endpoints
+
+Mappings:
+- GET /api/mappings
+  - Description: Get available data source mappings
+  - Query Parameters: source_type (optional, 'source' or 'target')
+
+Reconciliations:
+- POST /api/reconciliations/upload
+  - Description: Upload source and target files
+  - Form Data: sourceFile, targetFile, source_mapping_id, target_mapping_id
+
+- POST /api/reconciliations/{job_id}/run
+  - Description: Start reconciliation process for a job
+
+- GET /api/reconciliations/results
+  - Description: Get reconciliation results
+  - Query Parameters: jobId (optional)
+
+- GET /api/reconciliations/{job_id}/status
+  - Description: Get status of a reconciliation job
+
+Exceptions:
+- GET /api/exceptions
+  - Description: Get list of exceptions
+  - Query Parameters: jobId (optional), status (optional), priority (optional)
+
+- GET /api/exceptions/{exception_id}
+  - Description: Get details of a specific exception
+
+- POST /api/exceptions/{exception_id}/resolve
+  - Description: Resolve an exception
+  - Body: resolution_notes, resolution_action
+
+5.2 Request/Response Formats
+All API endpoints accept and return JSON data. File uploads use multipart/form-data format.
+
+Example Response for GET /api/reconciliations/results:
+```json
+{
+  "jobId": 123,
+  "jobStatus": "COMPLETED",
+  "completedAt": "2023-04-01T12:34:56Z",
+  "summary": {
+    "matched_count": 150,
+    "partial_match_count": 25,
+    "exceptions_count": 10,
+    "ai_errors": 0
+  },
+  "results": [
+    {
+      "id": "TX-12345",
+      "date": "2023-03-15",
+      "description": "Invoice Payment",
+      "amount": "1500.00",
+      "status": "Matched",
+      "action": "View",
+      "details": {
+        "source_id": "SRC-001",
+        "target_id": "TGT-001"
+      }
+    },
+    // More results...
+  ]
+}
+```
+
+6. Deployment Architecture
+
+6.1 Environment Setup
+The system requires the following environment setup:
+
+Development:
+- Node.js and npm for frontend development
+- Python virtual environment for backend development
+- SQLite database for local development
+- Redis server for Celery
+
+Production:
+- Web server (Nginx/Apache) for static file serving
+- WSGI server (Gunicorn) for Python application
+- PostgreSQL database
+- Redis server for Celery
+- Azure OpenAI API access
+
+6.2 Deployment Process
+Frontend Deployment:
+1. Build the React application using `npm run build`
+2. Deploy the static files to a web server or CDN
+
+Backend Deployment:
+1. Set up a Python environment with required dependencies
+2. Configure environment variables for database, Redis, and Azure OpenAI
+3. Run database migrations
+4. Start the WSGI server
+5. Start Celery workers
+
+7. Security Considerations
+- API Authentication: Token-based authentication for API access
+- Data Encryption: Sensitive data encrypted at rest and in transit
+- Input Validation: Thorough validation of all user inputs
+- File Upload Security: Validation of file types and content
+- Error Handling: Proper error handling without exposing sensitive information
+- Rate Limiting: Protection against abuse through rate limiting
+
+8. Future Enhancements
+- Multi-tenant support
+- Advanced reporting and analytics
+- Machine learning for improved matching accuracy
+- Integration with accounting systems
+- Mobile application
+- Workflow automation for exception resolution

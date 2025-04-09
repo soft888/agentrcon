@@ -1,0 +1,44 @@
+# Environment files
+.env
+instance/*
+!instance/.gitkeep
+
+# Python cache and virtual environment
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# IDE / Editor specific
+.vscode/
+.idea/
+*.swp
+*~
+
+# Build artifacts / Test reports
+dist/
+build/
+*.egg-info/
+htmlcov/
+.pytest_cache/
+.coverage
+
+# Uploaded files (if you don't want them in repo)
+static/uploads/*
+!static/uploads/.gitkeep # Keep the folder but ignore contents
+
+# Log files
+*.log
+
+# Celery / Kombu pid files
+*.pid
+celerybeat-schedule.*
+
+# Database files (if using SQLite for local testing - PostgreSQL is external)
+# *.db
+# *.db-journal
+
+# Other OS specific
+.DS_Store
+Thumbs.db

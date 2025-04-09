@@ -1,0 +1,18 @@
+Flask
+Flask-SQLAlchemy
+Flask-Migrate
+psycopg2-binary  # <-- PostgreSQL driver
+python-dotenv
+celery[redis]    # Or celery[rabbitmq]
+redis            # Or rabbitmq server
+requests
+werkzeug
+langchain
+langchain-openai # <-- Still needed for Azure OpenAI integration
+langchain-community
+tiktoken
+pandas
+gevent
+openpyxl
+# pandas, openpyxl # Add if needed for parsing
+# chromadb, faiss-cpu # Optional vector store deps

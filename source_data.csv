@@ -1,0 +1,11 @@
+transaction_id,date,description,amount
+BNK-1001,2024-07-15,"Deposit - Customer A Payment INV#123",1500.00
+BNK-1002,2024-07-16,"Check #1234 Paid - Vendor B Supplies",-502.50
+BNK-1003,2024-07-17,"Wire Out - Supplier C Equipment",-10050.00
+BNK-1004,2024-07-18,"ACH Deposit - Client D Services",3200.00
+BNK-1005,2024-07-10,"Monthly Service Fee - July",-50.00
+BNK-1006,2024-07-21,"Cash Withdrawal - Branch ATM",-200.00
+BNK-1007,2024-07-23,"ACH Payment - Vendor E Rent",-750.00
+BNK-1008,2024-07-25,"Online Bill Pay - Energy Co.",-185.60
+BNK-1009,2024-07-26,"Interest Payment Received",15.25
+BNK-1010,2024-07-28,"Deposit - Customer G Refund",45.00

@@ -1,0 +1,43 @@
+# AgentRec Knowledge Base for Reconciliation Rules - AP Payments to Invoices (v1.0)
+
+# --- Core Matching Criteria ---
+
+Rule KB-AP-001: Vendor Match (Prerequisite)
+DEFINITION: A match requires the vendor information to correspond. Check if internal_vendor_id matches between Payment (Source) and Invoice (Target). If IDs are unavailable or don't match, check if internal_vendor_name has a high similarity score (e.g., > 90% using fuzzy matching - Note: AI must determine similarity).
+CONDITION: If vendor information does not correspond, the records cannot be Matched or Partially Matched, likely resulting in an Exception.
+
+Rule KB-AP-002: Invoice Number Exact Match
+DEFINITION: Transactions match if the internal_invoice_no field is identical and non-empty on both Payment (Source) and Invoice (Target) records, AND Rule KB-AP-001 (Vendor Match) is met.
+CONDITION: If this rule and Rule KB-AP-003 (Amount Exact Match) are met, the status is 'Matched'. This is the highest priority match.
+
+Rule KB-AP-003: Amount Exact Match
+DEFINITION: Transactions match if the absolute difference between the source internal_amount (Payment) and the target internal_amount (Invoice) is zero (0.00). Consider potential discounts if provided in separate fields (e.g., internal_discount_amount - currently not defined).
+
+# --- Tolerances and Partial Matches ---
+
+Rule KB-AP-004: Amount Tolerance (AP)
+DEFINITION: An amount tolerance of $2.00 (absolute difference) is permitted for potential partial matches if key identifiers align.
+CONDITION: If Rule KB-AP-001 (Vendor Match) AND Rule KB-AP-002 (Invoice Number Match) are met, but the absolute internal_amount difference is greater than 0.00 and less than or equal to 2.00, the status is 'Partial Match'. The Exception Type is 'Amount Tolerance (AP)'.
+
+Rule KB-AP-005: PO Number Match (Alternative Identifier)
+DEFINITION: If Rule KB-AP-002 (Invoice Number Match) fails, check for a match on internal_po_no (if available on both records).
+CONDITION: If Rule KB-AP-001 (Vendor Match) AND Rule KB-AP-003 (Amount Exact Match) are met AND internal_po_no matches, the status is 'Matched'. If Amount matches within tolerance (Rule KB-AP-004), status is 'Partial Match'.
+
+# --- Exception Definitions ---
+
+Rule KB-AP-101: Amount Mismatch Exception
+CONDITION: If Rule KB-AP-001 (Vendor Match) AND (Rule KB-AP-002 OR Rule KB-AP-005 criteria are met), but the absolute internal_amount difference is greater than the tolerance defined in Rule KB-AP-004 ($2.00), the status is 'Exception'. The Exception Type is 'Amount Mismatch (AP)'.
+
+Rule KB-AP-102: Missing Invoice Match
+CONDITION: If a source (Payment) transaction cannot be matched (exactly or partially based on Invoice#, PO#, Vendor, Amount) with any available target (Invoice) transaction, the status is 'Exception'. The Exception Type is 'Missing Invoice Match'.
+
+Rule KB-AP-103: Missing Payment Match
+CONDITION: If a target (Invoice) transaction remains unmatched after attempting to match all source (Payment) transactions, the status is 'Exception'. The Exception Type is 'Missing Payment Match'.
+
+Rule KB-AP-104: Potential Duplicate Payment
+CONDITION: If multiple source (Payment) records appear to match a single target (Invoice) based on Invoice#, Vendor, and Amount (within tolerance), flag as 'Exception' with Type 'Potential Duplicate Payment'. Requires further investigation.
+
+# --- General Notes ---
+# - Requires semantic fields: internal_id, internal_date, internal_amount, internal_description, internal_vendor_id, internal_vendor_name, internal_invoice_no, internal_po_no. Ensure mappings provide these.
+# - Vendor Match is usually a prerequisite.
+# - Invoice Number match is preferred over PO Number match.

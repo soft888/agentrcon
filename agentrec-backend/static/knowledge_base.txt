@@ -1,0 +1,43 @@
+# AgentRec Knowledge Base for Reconciliation Rules - v1.0
+
+# --- Core Matching Criteria ---
+
+Rule KB-001: Amount Exact Match
+DEFINITION: Transactions are considered an exact amount match if the absolute difference between the source internal_amount and the target internal_amount is zero (0.00).
+
+Rule KB-002: Date Exact Match
+DEFINITION: Transactions are considered an exact date match if the source internal_date and the target internal_date are identical.
+
+Rule KB-003: Basic Exact Match Condition
+CONDITION: For a transaction pair to be 'Matched', both Rule KB-001 (Amount Exact Match using internal_amount) and Rule KB-002 (Date Exact Match using internal_date) must be met.
+
+# --- Tolerances and Partial Matches ---
+
+Rule KB-004: Amount Tolerance
+DEFINITION: An amount tolerance of $5.00 (absolute difference) is permitted.
+CONDITION: If Rule KB-002 (Date Exact Match using internal_date) is met, but the absolute internal_amount difference is greater than 0.00 and less than or equal to 5.00, the status is 'Partial Match'. The Exception Type should be 'Amount Tolerance'.
+
+Rule KB-005: Date Tolerance
+DEFINITION: A date tolerance of 2 calendar days is permitted (target internal_date can be up to 2 days after source internal_date).
+CONDITION: If Rule KB-001 (Amount Exact Match using internal_amount) is met, but the target internal_date is 1 or 2 days after the source internal_date, the status is 'Partial Match'. The Exception Type should be 'Date Tolerance'.
+
+# --- Exception Definitions ---
+
+Rule KB-101: Amount Mismatch Exception
+CONDITION: If Rule KB-002 (Date Exact Match using internal_date) is met, but the absolute internal_amount difference is greater than the tolerance defined in Rule KB-004 ($5.00), the status is 'Exception'. The Exception Type is 'Amount Mismatch'.
+
+Rule KB-102: Date Mismatch Exception
+CONDITION: If Rule KB-001 (Amount Exact Match using internal_amount) is met, but the internal_date difference is outside the tolerance defined in Rule KB-005 (target internal_date is not same day, day+1, or day+2), the status is 'Exception'. The Exception Type is 'Date Mismatch'.
+
+# --- (Keep KB-103, KB-104, KB-105 as they refer to the process outcome) ---
+Rule KB-103: Missing Transaction (Target)
+CONDITION: If a source transaction cannot be matched...
+
+Rule KB-104: Missing Transaction (Source)
+CONDITION: If a target transaction remains unmatched...
+
+Rule KB-105: Potential Duplicate (Requires advanced logic/AI)
+CONDITION: If multiple source transactions seem to match a single target transaction...
+
+# --- Notes ---
+# - Rules now operate on standardized internal field names like internal_amount, internal_date.

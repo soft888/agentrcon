@@ -1,0 +1,11 @@
+transaction_id,date,description,amount
+ERP-5001,2024-07-15,"Customer A Payment Applied - INV#123",1500.00
+ERP-5002,2024-07-16,"AP Payment - Vendor B PO#456",-500.00
+ERP-5003,2024-07-17,"AP Payment - Supplier C INV#789",-10000.00
+ERP-5004,2024-07-20,"AR Receipt - Client D ACH",3200.00
+ERP-5005,2024-07-20,"Bank Fees Expense - July",-50.00
+ERP-5006,2024-07-22,"Office Supplies Expense",-150.75
+ERP-5007,2024-07-23,"Rent Expense - Vendor E",-750.00
+ERP-5008,2024-07-25,"Utilities Expense - July Bill",-185.60
+ERP-5009,2024-07-27,"Miscellaneous Income",25.50
+ERP-5010,2024-07-28,"Customer G Credit Memo Applied",45.00

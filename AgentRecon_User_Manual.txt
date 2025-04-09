@@ -1,0 +1,339 @@
+﻿AgentRecon User Manual
+
+Table of Contents
+1. Introduction
+   1.1 About AgentRecon
+   1.2 Purpose of This Manual
+   1.3 System Requirements
+2. Getting Started
+   2.1 Accessing the Application
+   2.2 User Interface Overview
+   2.3 Navigation
+3. Dashboard
+   3.1 Key Performance Indicators
+   3.2 Recent Activity
+   3.3 Exception Management
+4. Reconciliation Process
+   4.1 Starting a New Reconciliation
+   4.2 File Upload and Mapping
+   4.3 Running the Reconciliation
+   4.4 Viewing Results
+   4.5 Filtering and Searching
+5. Exception Management
+   5.1 Viewing Exceptions
+   5.2 Exception Details
+   5.3 Resolving Exceptions
+   5.4 AI Suggestions
+6. Reports
+   6.1 Available Reports
+   6.2 Generating Reports
+   6.3 Exporting Data
+7. Settings
+   7.1 User Profile
+   7.2 Data Source Mappings
+   7.3 System Configuration
+8. Troubleshooting
+   8.1 Common Issues
+   8.2 Error Messages
+   8.3 Support Contact Information
+9. Glossary
+
+1. Introduction
+
+1.1 About AgentRecon
+AgentRecon is an intelligent reconciliation solution designed to streamline and automate the process of reconciling financial transactions between different systems. By leveraging artificial intelligence, AgentRecon can match transactions, identify discrepancies, and suggest resolutions, significantly reducing the time and effort required for reconciliation tasks.
+
+Key features of AgentRecon include:
+- Automated transaction matching using AI
+- Intelligent exception identification and resolution
+- Customizable data source mappings
+- Comprehensive dashboard and reporting
+- User-friendly interface for managing reconciliation processes
+
+1.2 Purpose of This Manual
+This user manual provides comprehensive guidance on how to use the AgentRecon application effectively. It covers all aspects of the application, from basic navigation to advanced features, and is intended for end users who will be performing reconciliation tasks.
+
+1.3 System Requirements
+To use AgentRecon, you need:
+- A modern web browser (Chrome, Firefox, Edge, or Safari)
+- Internet connection
+- Screen resolution of at least 1280x720
+- User credentials provided by your system administrator
+
+2. Getting Started
+
+2.1 Accessing the Application
+To access AgentRecon:
+1. Open your web browser
+2. Navigate to the URL provided by your system administrator (typically http://your-company-domain/agentrec)
+3. Enter your username and password on the login screen
+4. Click "Sign In"
+
+If you don't have login credentials, please contact your system administrator.
+
+2.2 User Interface Overview
+The AgentRecon interface consists of several key areas:
+
+- Header: Contains the application logo, navigation menu, and user profile options
+- Main Content Area: Displays the content of the currently selected section
+- Sidebar (in some sections): Provides additional navigation or filtering options
+- Action Buttons: Located in various sections for performing specific actions
+- AI Assistant: Available through the "AI" floating button in the bottom-right corner
+
+2.3 Navigation
+The main navigation menu is located in the header and includes the following sections:
+
+- Dashboard: Overview of reconciliation activities and key metrics
+- Reconciliations: Where you perform and manage reconciliation tasks
+- Exceptions: List of exceptions that require resolution
+- Reports: Access to various reports and analytics
+- Settings: Configuration options for the application
+
+Click on any menu item to navigate to that section.
+
+3. Dashboard
+
+3.1 Key Performance Indicators
+The dashboard displays several key performance indicators (KPIs) that provide at-a-glance information about your reconciliation activities:
+
+- Total Reconciliations: Number of reconciliation jobs performed
+- Match Rate: Percentage of transactions successfully matched
+- Open Exceptions: Number of unresolved exceptions
+- Average Resolution Time: Average time taken to resolve exceptions
+
+These KPIs help you monitor the efficiency and effectiveness of your reconciliation processes.
+
+3.2 Recent Activity
+The Recent Activity section shows a chart of reconciliation activities over time, allowing you to identify trends and patterns. You can adjust the time period displayed using the dropdown menu above the chart.
+
+3.3 Exception Management
+The Exception Management section on the dashboard shows a summary of recent exceptions that require attention. From here, you can:
+
+- View the most critical exceptions
+- See exception types and priorities
+- Click "View All Exceptions" to navigate to the full Exceptions page
+
+4. Reconciliation Process
+
+4.1 Starting a New Reconciliation
+To start a new reconciliation:
+1. Navigate to the Reconciliations page
+2. Select the appropriate reconciliation type from the sidebar (e.g., Bank to GL, AP to Invoices)
+3. Click "New Reconciliation" in the sidebar or use the upload card in the main content area
+
+4.2 File Upload and Mapping
+To upload files for reconciliation:
+1. In the "Start New Reconciliation" card, click "Choose File" for the Source File
+2. Select the source file from your computer
+3. Click "Choose File" for the Target File
+4. Select the target file from your computer
+5. Select the appropriate Source Mapping from the dropdown menu
+6. Select the appropriate Target Mapping from the dropdown menu
+7. Click "Upload Files"
+
+Supported file formats include CSV, Excel (XLS, XLSX), and text files.
+
+Note: Data source mappings must be configured in advance by an administrator. These mappings define how columns in your source and target files correspond to the internal data structure used by AgentRecon.
+
+4.3 Running the Reconciliation
+After uploading files:
+1. The system will display a confirmation message with the Job ID
+2. Click "Run Reconciliation" to start the reconciliation process
+3. The system will display the current status of the job (PENDING, PROCESSING, COMPLETED, or FAILED)
+4. Once the job is COMPLETED, the results will be displayed automatically
+
+The reconciliation process runs in the background, so you can navigate to other parts of the application while waiting for it to complete.
+
+4.4 Viewing Results
+Once the reconciliation is complete, the results are displayed in a table showing:
+- Transaction ID
+- Date
+- Description
+- Amount
+- Status (Matched, Partial Match, Exception, UnmatchedSource, UnmatchedTarget)
+- Actions (View, Resolve, Review)
+
+Above the table, a summary shows the number of matched transactions, partial matches, and exceptions.
+
+To view details of a specific transaction:
+1. Find the transaction in the table
+2. Click the action button (View, Resolve, or Review) depending on the status
+
+4.5 Filtering and Searching
+To filter the reconciliation results:
+1. Use the Filter Bar above the results table
+2. Select filters for Status, Date Range, or Amount Range
+3. Click "Apply Filters" to update the displayed results
+
+To search for specific transactions:
+1. Enter search terms in the search box
+2. The table will update to show only matching transactions
+
+5. Exception Management
+
+5.1 Viewing Exceptions
+To view exceptions:
+1. Navigate to the Exceptions page from the main menu
+2. The page displays a table of all exceptions requiring attention
+3. Each exception shows:
+   - Exception ID
+   - Type
+   - Date
+   - Amount
+   - Priority
+   - Status
+   - Actions
+
+You can filter exceptions by:
+- Job ID
+- Exception Type
+- Priority
+- Status
+- Date Range
+
+5.2 Exception Details
+To view details of a specific exception:
+1. Click on the exception ID or the "View" button in the Actions column
+2. The Exception Detail page shows:
+   - Exception information (ID, type, priority, status)
+   - Transaction details from both source and target systems
+   - Discrepancy information
+   - AI analysis and recommendation
+   - Resolution options
+
+5.3 Resolving Exceptions
+To resolve an exception:
+1. Navigate to the Exception Detail page
+2. Review the discrepancy information
+3. Select a resolution action from the available options:
+   - Accept Match: Confirm a suggested match
+   - Create Manual Match: Link to a different transaction
+   - Mark as Reconciled: Indicate the exception has been handled outside the system
+   - Flag for Review: Mark for review by another user
+4. Add resolution notes explaining the action taken
+5. Click "Resolve Exception"
+
+Once resolved, the exception status changes to "Resolved" and it is removed from the active exceptions list.
+
+5.4 AI Suggestions
+AgentRecon uses AI to analyze exceptions and suggest resolutions. The AI Suggestions Bar at the top of the Exceptions page shows how many exceptions can be automatically resolved based on previous patterns.
+
+To apply AI suggestions:
+1. Review the number of suggested resolutions in the AI Suggestions Bar
+2. Click "Apply AI Suggestions" to automatically resolve those exceptions
+3. The system will process the suggestions and update the exceptions list
+
+You can also see AI recommendations for individual exceptions on their detail pages.
+
+6. Reports
+
+6.1 Available Reports
+AgentRecon provides several standard reports:
+- Reconciliation Summary: Overview of all reconciliation jobs
+- Exception Analysis: Breakdown of exceptions by type and status
+- Resolution Time: Analysis of time taken to resolve exceptions
+- Match Rate Trends: Changes in match rates over time
+- User Activity: Actions performed by users
+
+6.2 Generating Reports
+To generate a report:
+1. Navigate to the Reports page
+2. Select the desired report type
+3. Set the parameters (date range, reconciliation types, etc.)
+4. Click "Generate Report"
+5. The report will be displayed on screen
+
+6.3 Exporting Data
+To export report data:
+1. Generate the desired report
+2. Click the "Export" button
+3. Select the export format (Excel, CSV, PDF)
+4. The file will be downloaded to your computer
+
+7. Settings
+
+7.1 User Profile
+To manage your user profile:
+1. Click your username in the top-right corner of the header
+2. Select "Profile" from the dropdown menu
+3. Update your information as needed
+4. Click "Save Changes"
+
+7.2 Data Source Mappings
+Data source mappings define how columns in your source and target files correspond to the internal data structure used by AgentRecon.
+
+To view existing mappings:
+1. Navigate to the Settings page
+2. Select "Data Source Mappings"
+3. The page displays all available mappings
+
+To create a new mapping (administrator only):
+1. Click "Create New Mapping"
+2. Enter a name for the mapping
+3. Select the source type (source or target)
+4. Define column mappings by matching file headers to internal field names
+5. Specify date format if needed
+6. Click "Save Mapping"
+
+7.3 System Configuration
+System configuration options (administrator only) include:
+- User management
+- Authentication settings
+- AI service configuration
+- Email notification settings
+- System backup and maintenance
+
+8. Troubleshooting
+
+8.1 Common Issues
+File Upload Issues:
+- Ensure files are in a supported format (CSV, Excel, text)
+- Check that file size is within limits (typically 10MB)
+- Verify that the file structure matches the selected mapping
+
+Reconciliation Process Issues:
+- If a job remains in PENDING status for too long, try refreshing the page
+- If a job fails, check the error message and ensure files are properly formatted
+
+Exception Resolution Issues:
+- If you cannot resolve an exception, ensure you have the necessary permissions
+- If AI suggestions are not available, the system may need more training data
+
+8.2 Error Messages
+Common error messages and their solutions:
+
+"File upload failed"
+- Check file format and size
+- Ensure you have permission to upload files
+
+"Job not found"
+- The job ID may be incorrect
+- The job may have been deleted
+
+"Failed to retrieve reconciliation results"
+- The server may be experiencing issues
+- Try refreshing the page or contact support
+
+8.3 Support Contact Information
+If you encounter issues that cannot be resolved using this manual, please contact support:
+
+- Email: support@agentrec.com
+- Phone: 1-800-AGENTREC
+- Internal Ticket System: http://helpdesk.your-company.com
+
+When contacting support, please provide:
+- Your username
+- The specific page or feature where the issue occurred
+- Any error messages displayed
+- Steps to reproduce the issue
+
+9. Glossary
+
+- Reconciliation: The process of comparing transactions between different systems to ensure they match
+- Source System: The primary system from which transactions are extracted
+- Target System: The secondary system against which source transactions are compared
+- Exception: A discrepancy between source and target transactions that requires resolution
+- Mapping: The configuration that defines how columns in source and target files correspond to internal fields
+- Match: A successful pairing of a source transaction with a target transaction
+- Partial Match: A pairing where some but not all criteria match
+- Resolution: The action taken to address an exception

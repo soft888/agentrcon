@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgentRecon System Design Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 2cm;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            font-size: 24pt;
+            margin-bottom: 24pt;
+        }
+        h2 {
+            font-size: 18pt;
+            margin-top: 20pt;
+            margin-bottom: 10pt;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5pt;
+        }
+        h3 {
+            font-size: 14pt;
+            margin-top: 15pt;
+            margin-bottom: 8pt;
+        }
+        p {
+            margin-bottom: 10pt;
+            text-align: justify;
+        }
+        ul, ol {
+            margin-bottom: 10pt;
+        }
+        li {
+            margin-bottom: 5pt;
+        }
+        .toc {
+            margin: 20pt 0;
+            padding: 10pt;
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+        }
+        .toc-item {
+            margin-left: 20pt;
+        }
+        pre {
+            background-color: #f5f5f5;
+            padding: 10pt;
+            border: 1px solid #ddd;
+            overflow-x: auto;
+            font-family: Consolas, monospace;
+        }
+        code {
+            font-family: Consolas, monospace;
+            background-color: #f5f5f5;
+            padding: 2pt 4pt;
+        }
+        @media print {
+            body {
+                margin: 1cm;
+            }
+            .no-print {
+                display: none;
+            }
+            h2 {
+                page-break-before: always;
+            }
+            h2:first-of-type {
+                page-break-before: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>AgentRecon System Design Document</h1>
+
+    <div class="toc">
+        <h2>Table of Contents</h2>
+        <ol>
+            <li>Introduction
+                <ol class="toc-item">
+                    <li>Purpose</li>
+                    <li>Scope</li>
+                    <li>Definitions and Acronyms</li>
+                </ol>
+            </li>
+            <li>System Overview
+                <ol class="toc-item">
+                    <li>System Description</li>
+                    <li>System Architecture</li>
+                    <li>Technology Stack</li>
+                </ol>
+            </li>
+            <li>Component Details
+                <ol class="toc-item">
+                    <li>Frontend Architecture</li>
+                    <li>Backend Architecture</li>
+                    <li>Database Design</li>
+                    <li>AI Service</li>
+                </ol>
+            </li>
+            <li>Data Flow
+                <ol class="toc-item">
+                    <li>Reconciliation Process Flow</li>
+                    <li>Exception Handling Flow</li>
+                </ol>
+            </li>
+            <li>API Documentation
+                <ol class="toc-item">
+                    <li>Endpoints</li>
+                    <li>Request/Response Formats</li>
+                </ol>
+            </li>
+            <li>Deployment Architecture
+                <ol class="toc-item">
+                    <li>Environment Setup</li>
+                    <li>Deployment Process</li>
+                </ol>
+            </li>
+            <li>Security Considerations</li>
+            <li>Future Enhancements</li>
+        </ol>
+    </div>
+
+    <h2>1. Introduction</h2>
+
+    <h3>1.1 Purpose</h3>
+    <p>The purpose of this document is to provide a comprehensive overview of the AgentRecon system architecture, components, and design decisions. This document serves as a reference for developers, system administrators, and other stakeholders involved in the development, maintenance, and enhancement of the AgentRecon system.</p>
+
+    <h3>1.2 Scope</h3>
+    <p>This document covers the technical architecture, component design, data flow, and integration points of the AgentRecon system. It includes details about both the frontend and backend components, database design, AI service integration, and deployment considerations.</p>
+
+    <h3>1.3 Definitions and Acronyms</h3>
+    <ul>
+        <li>AgentRecon: Intelligent Reconciliation Solution</li>
+        <li>API: Application Programming Interface</li>
+        <li>UI: User Interface</li>
+        <li>AI: Artificial Intelligence</li>
+        <li>RAG: Retrieval-Augmented Generation</li>
+        <li>KB: Knowledge Base</li>
+        <li>GL: General Ledger</li>
+        <li>AP: Accounts Payable</li>
+        <li>AR: Accounts Receivable</li>
+    </ul>
+
+    <h2>2. System Overview</h2>
+
+    <h3>2.1 System Description</h3>
+    <p>AgentRecon is an intelligent reconciliation solution designed to automate and streamline the process of reconciling financial transactions between different systems. The application leverages AI to match transactions, identify discrepancies, and suggest resolutions for exceptions. Key features include:</p>
+    <ul>
+        <li>File upload and mapping for source and target systems</li>
+        <li>Automated reconciliation with AI-powered matching</li>
+        <li>Exception management and resolution</li>
+        <li>Dashboard with key performance indicators</li>
+        <li>Detailed reporting and analytics</li>
+    </ul>
+
+    <h3>2.2 System Architecture</h3>
+    <p>AgentRecon follows a client-server architecture with a clear separation between the frontend and backend components:</p>
+    <ul>
+        <li>Frontend: React-based single-page application (SPA)</li>
+        <li>Backend: Flask-based RESTful API server</li>
+        <li>Database: SQL database (PostgreSQL or SQLite)</li>
+        <li>Task Queue: Celery with Redis for background processing</li>
+        <li>AI Service: Azure OpenAI integration for intelligent matching</li>
+    </ul>
+    <p>The system is designed with modularity in mind, allowing components to be developed, tested, and deployed independently.</p>
+
+    <h3>2.3 Technology Stack</h3>
+    <p><strong>Frontend:</strong></p>
+    <ul>
+        <li>React 19.1.0</li>
+        <li>React Router 7.5.0</li>
+        <li>CSS Modules for styling</li>
+        <li>React Modal 3.16.3</li>
+    </ul>
+
+    <p><strong>Backend:</strong></p>
+    <ul>
+        <li>Python</li>
+        <li>Flask web framework</li>
+        <li>SQLAlchemy ORM</li>
+        <li>Flask-Migrate for database migrations</li>
+        <li>Celery for asynchronous task processing</li>
+        <li>Redis for message broker and result backend</li>
+        <li>LangChain for AI integration</li>
+        <li>Azure OpenAI for AI capabilities</li>
+    </ul>
+
+    <p><strong>Database:</strong></p>
+    <ul>
+        <li>PostgreSQL (production)</li>
+        <li>SQLite (development/testing)</li>
+    </ul>
+
+    <h2>3. Component Details</h2>
+
+    <h3>3.1 Frontend Architecture</h3>
+    <p>The frontend is built using React and follows a component-based architecture. Key components include:</p>
+    <ul>
+        <li>App: The root component that sets up routing and the overall application structure</li>
+        <li>Header: Navigation and branding</li>
+        <li>Pages:
+            <ul>
+                <li>DashboardPage: Overview of reconciliation activities</li>
+                <li>ReconciliationPage: Main reconciliation workflow</li>
+                <li>ExceptionsPage: List of exceptions requiring resolution</li>
+                <li>ExceptionDetailPage: Detailed view of a specific exception</li>
+            </ul>
+        </li>
+    </ul>
+
+    <p>The frontend uses React Router for navigation and CSS Modules for component-specific styling. State management is handled through React's built-in hooks (useState, useEffect) for component-level state and context API for application-wide state when needed.</p>
+
+    <p><strong>Component Hierarchy:</strong></p>
+    <ul>
+        <li>App
+            <ul>
+                <li>Header</li>
+                <li>Routes
+                    <ul>
+                        <li>DashboardPage
+                            <ul>
+                                <li>MainContent
+                                    <ul>
+                                        <li>KpiCards</li>
+                                        <li>ActivityChart</li>
+                                        <li>ExceptionManagement</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>ReconciliationPage
+                            <ul>
+                                <li>ReconciliationSidebar</li>
+                                <li>ReconciliationContent
+                                    <ul>
+                                        <li>FileUpload</li>
+                                        <li>FilterBar</li>
+                                        <li>ActionBar</li>
+                                        <li>TransactionTable</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>ExceptionsPage
+                            <ul>
+                                <li>ExceptionsContent
+                                    <ul>
+                                        <li>FilterBar</li>
+                                        <li>ExceptionsActionBar</li>
+                                        <li>AiSuggestionsBar</li>
+                                        <li>ExceptionsTable</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>ExceptionDetailPage</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+    <h3>3.2 Backend Architecture</h3>
+    <p>The backend follows a modular architecture with clear separation of concerns:</p>
+    <ul>
+        <li>Application Factory: Creates and configures the Flask application</li>
+        <li>Blueprints: Organize routes by feature</li>
+        <li>Models: Define database schema and relationships</li>
+        <li>Services:
+            <ul>
+                <li>Reconciliation Service: Core reconciliation logic</li>
+                <li>AI Service: Integration with Azure OpenAI</li>
+            </ul>
+        </li>
+        <li>Tasks: Celery tasks for background processing</li>
+        <li>Config: Configuration settings</li>
+    </ul>
+
+    <p>The backend exposes a RESTful API that the frontend consumes. Authentication and authorization are handled through token-based mechanisms.</p>
+
+    <h3>3.3 Database Design</h3>
+    <p>The database schema includes the following key entities:</p>
+
+    <p><strong>DataSourceMapping:</strong> Defines mappings between source/target file columns and internal semantic names</p>
+    <ul>
+        <li>id (PK)</li>
+        <li>mapping_name</li>
+        <li>source_type (enum: 'source' or 'target')</li>
+        <li>column_mappings (JSON)</li>
+        <li>date_format_string</li>
+    </ul>
+
+    <p><strong>ReconciliationJob:</strong> Represents a reconciliation job</p>
+    <ul>
+        <li>id (PK)</li>
+        <li>source_file</li>
+        <li>target_file</li>
+        <li>knowledge_base_file</li>
+        <li>status (enum: PENDING, PROCESSING, COMPLETED, FAILED)</li>
+        <li>celery_task_id</li>
+        <li>created_at</li>
+        <li>completed_at</li>
+        <li>results_summary (JSON)</li>
+        <li>source_mapping_id (FK)</li>
+        <li>target_mapping_id (FK)</li>
+    </ul>
+
+    <p><strong>ReconciliationResultItem:</strong> Individual result items from reconciliation</p>
+    <ul>
+        <li>id (PK)</li>
+        <li>job_id (FK)</li>
+        <li>display_id</li>
+        <li>date</li>
+        <li>description</li>
+        <li>amount</li>
+        <li>status</li>
+        <li>action</li>
+        <li>details (JSON)</li>
+        <li>created_at</li>
+    </ul>
+
+    <p><strong>ExceptionLog:</strong> Records of exceptions that need resolution</p>
+    <ul>
+        <li>id (PK)</li>
+        <li>job_id (FK)</li>
+        <li>exception_id_display</li>
+        <li>exception_type</li>
+        <li>priority</li>
+        <li>status</li>
+        <li>details (JSON)</li>
+        <li>created_at</li>
+        <li>resolved_at</li>
+        <li>resolution_notes</li>
+    </ul>
+
+    <p><strong>Relationships:</strong></p>
+    <ul>
+        <li>ReconciliationJob has many ReconciliationResultItems (one-to-many)</li>
+        <li>ReconciliationJob has many ExceptionLogs (one-to-many)</li>
+        <li>ReconciliationJob references two DataSourceMappings (many-to-one)</li>
+    </ul>
+
+    <h3>3.4 AI Service</h3>
+    <p>The AI service leverages Azure OpenAI and LangChain to provide intelligent matching capabilities:</p>
+    <ul>
+        <li>Retrieval-Augmented Generation (RAG): Uses a knowledge base of reconciliation rules to guide the matching process</li>
+        <li>Vector Store: Indexes the knowledge base for efficient retrieval</li>
+        <li>Prompt Engineering: Carefully crafted prompts to guide the AI in making accurate matching decisions</li>
+        <li>Output Parsing: Structured output using Pydantic models</li>
+    </ul>
+
+    <p>The AI service evaluates transaction pairs and determines:</p>
+    <ul>
+        <li>Match Status: Matched, Partial Match, or Exception</li>
+        <li>Exception Type: For non-matches, identifies the specific type of discrepancy</li>
+        <li>Reason: Explanation referencing specific knowledge base rules</li>
+    </ul>
+
+    <h2>4. Data Flow</h2>
+
+    <h3>4.1 Reconciliation Process Flow</h3>
+    <ol>
+        <li>User uploads source and target files through the UI</li>
+        <li>Files are saved to the server, and a ReconciliationJob record is created</li>
+        <li>User initiates reconciliation process</li>
+        <li>A Celery task is created to handle the reconciliation asynchronously</li>
+        <li>The reconciliation service:
+            <ol type="a">
+                <li>Parses the source and target files using the specified mappings</li>
+                <li>Identifies potential matches based on date and amount tolerances</li>
+                <li>For each potential match, calls the AI service to evaluate</li>
+                <li>Records the results (matches, partial matches, exceptions)</li>
+            </ol>
+        </li>
+        <li>The job status is updated to COMPLETED when finished</li>
+        <li>The frontend polls for job status and displays results when available</li>
+    </ol>
+
+    <h3>4.2 Exception Handling Flow</h3>
+    <ol>
+        <li>Exceptions are identified during the reconciliation process</li>
+        <li>Each exception is logged with details about the discrepancy</li>
+        <li>Users can view exceptions in the Exceptions page</li>
+        <li>For each exception, users can:
+            <ol type="a">
+                <li>Review the details</li>
+                <li>Apply AI suggestions for resolution</li>
+                <li>Manually resolve the exception</li>
+                <li>Add resolution notes</li>
+            </ol>
+        </li>
+        <li>Resolved exceptions are marked as such and included in reports</li>
+    </ol>
+
+    <h2>5. API Documentation</h2>
+
+    <h3>5.1 Endpoints</h3>
+
+    <p><strong>Mappings:</strong></p>
+    <ul>
+        <li>GET /api/mappings
+            <ul>
+                <li>Description: Get available data source mappings</li>
+                <li>Query Parameters: source_type (optional, 'source' or 'target')</li>
+            </ul>
+        </li>
+    </ul>
+
+    <p><strong>Reconciliations:</strong></p>
+    <ul>
+        <li>POST /api/reconciliations/upload
+            <ul>
+                <li>Description: Upload source and target files</li>
+                <li>Form Data: sourceFile, targetFile, source_mapping_id, target_mapping_id</li>
+            </ul>
+        </li>
+        <li>POST /api/reconciliations/{job_id}/run
+            <ul>
+                <li>Description: Start reconciliation process for a job</li>
+            </ul>
+        </li>
+        <li>GET /api/reconciliations/results
+            <ul>
+                <li>Description: Get reconciliation results</li>
+                <li>Query Parameters: jobId (optional)</li>
+            </ul>
+        </li>
+        <li>GET /api/reconciliations/{job_id}/status
+            <ul>
+                <li>Description: Get status of a reconciliation job</li>
+            </ul>
+        </li>
+    </ul>
+
+    <p><strong>Exceptions:</strong></p>
+    <ul>
+        <li>GET /api/exceptions
+            <ul>
+                <li>Description: Get list of exceptions</li>
+                <li>Query Parameters: jobId (optional), status (optional), priority (optional)</li>
+            </ul>
+        </li>
+        <li>GET /api/exceptions/{exception_id}
+            <ul>
+                <li>Description: Get details of a specific exception</li>
+            </ul>
+        </li>
+        <li>POST /api/exceptions/{exception_id}/resolve
+            <ul>
+                <li>Description: Resolve an exception</li>
+                <li>Body: resolution_notes, resolution_action</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h3>5.2 Request/Response Formats</h3>
+    <p>All API endpoints accept and return JSON data. File uploads use multipart/form-data format.</p>
+
+    <p><strong>Example Response for GET /api/reconciliations/results:</strong></p>
+    <pre>
+{
+  "jobId": 123,
+  "jobStatus": "COMPLETED",
+  "completedAt": "2023-04-01T12:34:56Z",
+  "summary": {
+    "matched_count": 150,
+    "partial_match_count": 25,
+    "exceptions_count": 10,
+    "ai_errors": 0
+  },
+  "results": [
+    {
+      "id": "TX-12345",
+      "date": "2023-03-15",
+      "description": "Invoice Payment",
+      "amount": "1500.00",
+      "status": "Matched",
+      "action": "View",
+      "details": {
+        "source_id": "SRC-001",
+        "target_id": "TGT-001"
+      }
+    },
+    // More results...
+  ]
+}
+    </pre>
+
+    <h2>6. Deployment Architecture</h2>
+
+    <h3>6.1 Environment Setup</h3>
+    <p>The system requires the following environment setup:</p>
+
+    <p><strong>Development:</strong></p>
+    <ul>
+        <li>Node.js and npm for frontend development</li>
+        <li>Python virtual environment for backend development</li>
+        <li>SQLite database for local development</li>
+        <li>Redis server for Celery</li>
+    </ul>
+
+    <p><strong>Production:</strong></p>
+    <ul>
+        <li>Web server (Nginx/Apache) for static file serving</li>
+        <li>WSGI server (Gunicorn) for Python application</li>
+        <li>PostgreSQL database</li>
+        <li>Redis server for Celery</li>
+        <li>Azure OpenAI API access</li>
+    </ul>
+
+    <h3>6.2 Deployment Process</h3>
+    <p><strong>Frontend Deployment:</strong></p>
+    <ol>
+        <li>Build the React application using <code>npm run build</code></li>
+        <li>Deploy the static files to a web server or CDN</li>
+    </ol>
+
+    <p><strong>Backend Deployment:</strong></p>
+    <ol>
+        <li>Set up a Python environment with required dependencies</li>
+        <li>Configure environment variables for database, Redis, and Azure OpenAI</li>
+        <li>Run database migrations</li>
+        <li>Start the WSGI server</li>
+        <li>Start Celery workers</li>
+    </ol>
+
+    <h2>7. Security Considerations</h2>
+    <ul>
+        <li>API Authentication: Token-based authentication for API access</li>
+        <li>Data Encryption: Sensitive data encrypted at rest and in transit</li>
+        <li>Input Validation: Thorough validation of all user inputs</li>
+        <li>File Upload Security: Validation of file types and content</li>
+        <li>Error Handling: Proper error handling without exposing sensitive information</li>
+        <li>Rate Limiting: Protection against abuse through rate limiting</li>
+    </ul>
+
+    <h2>8. Future Enhancements</h2>
+    <ul>
+        <li>Multi-tenant support</li>
+        <li>Advanced reporting and analytics</li>
+        <li>Machine learning for improved matching accuracy</li>
+        <li>Integration with accounting systems</li>
+        <li>Mobile application</li>
+        <li>Workflow automation for exception resolution</li>
+    </ul>
+
+    <div class="no-print">
+        <p style="margin-top: 40px; text-align: center;">
+            <button onclick="window.print()">Print to PDF</button>
+        </p>
+    </div>
+</body>
+</html>

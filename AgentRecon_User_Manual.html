@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgentRecon User Manual</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 2cm;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            font-size: 24pt;
+            margin-bottom: 24pt;
+        }
+        h2 {
+            font-size: 18pt;
+            margin-top: 20pt;
+            margin-bottom: 10pt;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5pt;
+        }
+        h3 {
+            font-size: 14pt;
+            margin-top: 15pt;
+            margin-bottom: 8pt;
+        }
+        p {
+            margin-bottom: 10pt;
+            text-align: justify;
+        }
+        ul, ol {
+            margin-bottom: 10pt;
+        }
+        li {
+            margin-bottom: 5pt;
+        }
+        .toc {
+            margin: 20pt 0;
+            padding: 10pt;
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+        }
+        .toc-item {
+            margin-left: 20pt;
+        }
+        .note {
+            background-color: #e6f7ff;
+            border-left: 4px solid #1890ff;
+            padding: 10pt;
+            margin: 10pt 0;
+        }
+        .warning {
+            background-color: #fff7e6;
+            border-left: 4px solid #fa8c16;
+            padding: 10pt;
+            margin: 10pt 0;
+        }
+        .tip {
+            background-color: #f6ffed;
+            border-left: 4px solid #52c41a;
+            padding: 10pt;
+            margin: 10pt 0;
+        }
+        @media print {
+            body {
+                margin: 1cm;
+            }
+            .no-print {
+                display: none;
+            }
+            h2 {
+                page-break-before: always;
+            }
+            h2:first-of-type {
+                page-break-before: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>AgentRecon User Manual</h1>
+
+    <div class="toc">
+        <h2>Table of Contents</h2>
+        <ol>
+            <li>Introduction
+                <ol class="toc-item">
+                    <li>About AgentRecon</li>
+                    <li>Purpose of This Manual</li>
+                    <li>System Requirements</li>
+                </ol>
+            </li>
+            <li>Getting Started
+                <ol class="toc-item">
+                    <li>Accessing the Application</li>
+                    <li>User Interface Overview</li>
+                    <li>Navigation</li>
+                </ol>
+            </li>
+            <li>Dashboard
+                <ol class="toc-item">
+                    <li>Key Performance Indicators</li>
+                    <li>Recent Activity</li>
+                    <li>Exception Management</li>
+                </ol>
+            </li>
+            <li>Reconciliation Process
+                <ol class="toc-item">
+                    <li>Starting a New Reconciliation</li>
+                    <li>File Upload and Mapping</li>
+                    <li>Running the Reconciliation</li>
+                    <li>Viewing Results</li>
+                    <li>Filtering and Searching</li>
+                </ol>
+            </li>
+            <li>Exception Management
+                <ol class="toc-item">
+                    <li>Viewing Exceptions</li>
+                    <li>Exception Details</li>
+                    <li>Resolving Exceptions</li>
+                    <li>AI Suggestions</li>
+                </ol>
+            </li>
+            <li>Reports
+                <ol class="toc-item">
+                    <li>Available Reports</li>
+                    <li>Generating Reports</li>
+                    <li>Exporting Data</li>
+                </ol>
+            </li>
+            <li>Settings
+                <ol class="toc-item">
+                    <li>User Profile</li>
+                    <li>Data Source Mappings</li>
+                    <li>System Configuration</li>
+                </ol>
+            </li>
+            <li>Troubleshooting
+                <ol class="toc-item">
+                    <li>Common Issues</li>
+                    <li>Error Messages</li>
+                    <li>Support Contact Information</li>
+                </ol>
+            </li>
+            <li>Glossary</li>
+        </ol>
+    </div>
+
+    <h2>1. Introduction</h2>
+
+    <h3>1.1 About AgentRecon</h3>
+    <p>AgentRecon is an intelligent reconciliation solution designed to streamline and automate the process of reconciling financial transactions between different systems. By leveraging artificial intelligence, AgentRecon can match transactions, identify discrepancies, and suggest resolutions, significantly reducing the time and effort required for reconciliation tasks.</p>
+
+    <p>Key features of AgentRecon include:</p>
+    <ul>
+        <li>Automated transaction matching using AI</li>
+        <li>Intelligent exception identification and resolution</li>
+        <li>Customizable data source mappings</li>
+        <li>Comprehensive dashboard and reporting</li>
+        <li>User-friendly interface for managing reconciliation processes</li>
+    </ul>
+
+    <h3>1.2 Purpose of This Manual</h3>
+    <p>This user manual provides comprehensive guidance on how to use the AgentRecon application effectively. It covers all aspects of the application, from basic navigation to advanced features, and is intended for end users who will be performing reconciliation tasks.</p>
+
+    <h3>1.3 System Requirements</h3>
+    <p>To use AgentRecon, you need:</p>
+    <ul>
+        <li>A modern web browser (Chrome, Firefox, Edge, or Safari)</li>
+        <li>Internet connection</li>
+        <li>Screen resolution of at least 1280x720</li>
+        <li>User credentials provided by your system administrator</li>
+    </ul>
+
+    <h2>2. Getting Started</h2>
+
+    <h3>2.1 Accessing the Application</h3>
+    <p>To access AgentRecon:</p>
+    <ol>
+        <li>Open your web browser</li>
+        <li>Navigate to the URL provided by your system administrator (typically http://your-company-domain/agentrec)</li>
+        <li>Enter your username and password on the login screen</li>
+        <li>Click "Sign In"</li>
+    </ol>
+
+    <div class="note">
+        <p>If you don't have login credentials, please contact your system administrator.</p>
+    </div>
+
+    <h3>2.2 User Interface Overview</h3>
+    <p>The AgentRecon interface consists of several key areas:</p>
+    <ul>
+        <li><strong>Header:</strong> Contains the application logo, navigation menu, and user profile options</li>
+        <li><strong>Main Content Area:</strong> Displays the content of the currently selected section</li>
+        <li><strong>Sidebar (in some sections):</strong> Provides additional navigation or filtering options</li>
+        <li><strong>Action Buttons:</strong> Located in various sections for performing specific actions</li>
+        <li><strong>AI Assistant:</strong> Available through the "AI" floating button in the bottom-right corner</li>
+    </ul>
+
+    <h3>2.3 Navigation</h3>
+    <p>The main navigation menu is located in the header and includes the following sections:</p>
+    <ul>
+        <li><strong>Dashboard:</strong> Overview of reconciliation activities and key metrics</li>
+        <li><strong>Reconciliations:</strong> Where you perform and manage reconciliation tasks</li>
+        <li><strong>Exceptions:</strong> List of exceptions that require resolution</li>
+        <li><strong>Reports:</strong> Access to various reports and analytics</li>
+        <li><strong>Settings:</strong> Configuration options for the application</li>
+    </ul>
+    <p>Click on any menu item to navigate to that section.</p>
+
+    <h2>3. Dashboard</h2>
+
+    <h3>3.1 Key Performance Indicators</h3>
+    <p>The dashboard displays several key performance indicators (KPIs) that provide at-a-glance information about your reconciliation activities:</p>
+    <ul>
+        <li><strong>Total Reconciliations:</strong> Number of reconciliation jobs performed</li>
+        <li><strong>Match Rate:</strong> Percentage of transactions successfully matched</li>
+        <li><strong>Open Exceptions:</strong> Number of unresolved exceptions</li>
+        <li><strong>Average Resolution Time:</strong> Average time taken to resolve exceptions</li>
+    </ul>
+    <p>These KPIs help you monitor the efficiency and effectiveness of your reconciliation processes.</p>
+
+    <h3>3.2 Recent Activity</h3>
+    <p>The Recent Activity section shows a chart of reconciliation activities over time, allowing you to identify trends and patterns. You can adjust the time period displayed using the dropdown menu above the chart.</p>
+
+    <h3>3.3 Exception Management</h3>
+    <p>The Exception Management section on the dashboard shows a summary of recent exceptions that require attention. From here, you can:</p>
+    <ul>
+        <li>View the most critical exceptions</li>
+        <li>See exception types and priorities</li>
+        <li>Click "View All Exceptions" to navigate to the full Exceptions page</li>
+    </ul>
+
+    <h2>4. Reconciliation Process</h2>
+
+    <h3>4.1 Starting a New Reconciliation</h3>
+    <p>To start a new reconciliation:</p>
+    <ol>
+        <li>Navigate to the Reconciliations page</li>
+        <li>Select the appropriate reconciliation type from the sidebar (e.g., Bank to GL, AP to Invoices)</li>
+        <li>Click "New Reconciliation" in the sidebar or use the upload card in the main content area</li>
+    </ol>
+
+    <h3>4.2 File Upload and Mapping</h3>
+    <p>To upload files for reconciliation:</p>
+    <ol>
+        <li>In the "Start New Reconciliation" card, click "Choose File" for the Source File</li>
+        <li>Select the source file from your computer</li>
+        <li>Click "Choose File" for the Target File</li>
+        <li>Select the target file from your computer</li>
+        <li>Select the appropriate Source Mapping from the dropdown menu</li>
+        <li>Select the appropriate Target Mapping from the dropdown menu</li>
+        <li>Click "Upload Files"</li>
+    </ol>
+
+    <div class="tip">
+        <p>Supported file formats include CSV, Excel (XLS, XLSX), and text files.</p>
+    </div>
+
+    <div class="note">
+        <p>Data source mappings must be configured in advance by an administrator. These mappings define how columns in your source and target files correspond to the internal data structure used by AgentRecon.</p>
+    </div>
+
+    <h3>4.3 Running the Reconciliation</h3>
+    <p>After uploading files:</p>
+    <ol>
+        <li>The system will display a confirmation message with the Job ID</li>
+        <li>Click "Run Reconciliation" to start the reconciliation process</li>
+        <li>The system will display the current status of the job (PENDING, PROCESSING, COMPLETED, or FAILED)</li>
+        <li>Once the job is COMPLETED, the results will be displayed automatically</li>
+    </ol>
+
+    <div class="tip">
+        <p>The reconciliation process runs in the background, so you can navigate to other parts of the application while waiting for it to complete.</p>
+    </div>
+
+    <h3>4.4 Viewing Results</h3>
+    <p>Once the reconciliation is complete, the results are displayed in a table showing:</p>
+    <ul>
+        <li>Transaction ID</li>
+        <li>Date</li>
+        <li>Description</li>
+        <li>Amount</li>
+        <li>Status (Matched, Partial Match, Exception, UnmatchedSource, UnmatchedTarget)</li>
+        <li>Actions (View, Resolve, Review)</li>
+    </ul>
+
+    <p>Above the table, a summary shows the number of matched transactions, partial matches, and exceptions.</p>
+
+    <p>To view details of a specific transaction:</p>
+    <ol>
+        <li>Find the transaction in the table</li>
+        <li>Click the action button (View, Resolve, or Review) depending on the status</li>
+    </ol>
+
+    <h3>4.5 Filtering and Searching</h3>
+    <p>To filter the reconciliation results:</p>
+    <ol>
+        <li>Use the Filter Bar above the results table</li>
+        <li>Select filters for Status, Date Range, or Amount Range</li>
+        <li>Click "Apply Filters" to update the displayed results</li>
+    </ol>
+
+    <p>To search for specific transactions:</p>
+    <ol>
+        <li>Enter search terms in the search box</li>
+        <li>The table will update to show only matching transactions</li>
+    </ol>
+
+    <h2>5. Exception Management</h2>
+
+    <h3>5.1 Viewing Exceptions</h3>
+    <p>To view exceptions:</p>
+    <ol>
+        <li>Navigate to the Exceptions page from the main menu</li>
+        <li>The page displays a table of all exceptions requiring attention</li>
+        <li>Each exception shows:
+            <ul>
+                <li>Exception ID</li>
+                <li>Type</li>
+                <li>Date</li>
+                <li>Amount</li>
+                <li>Priority</li>
+                <li>Status</li>
+                <li>Actions</li>
+            </ul>
+        </li>
+    </ol>
+
+    <p>You can filter exceptions by:</p>
+    <ul>
+        <li>Job ID</li>
+        <li>Exception Type</li>
+        <li>Priority</li>
+        <li>Status</li>
+        <li>Date Range</li>
+    </ul>
+
+    <h3>5.2 Exception Details</h3>
+    <p>To view details of a specific exception:</p>
+    <ol>
+        <li>Click on the exception ID or the "View" button in the Actions column</li>
+        <li>The Exception Detail page shows:
+            <ul>
+                <li>Exception information (ID, type, priority, status)</li>
+                <li>Transaction details from both source and target systems</li>
+                <li>Discrepancy information</li>
+                <li>AI analysis and recommendation</li>
+                <li>Resolution options</li>
+            </ul>
+        </li>
+    </ol>
+
+    <h3>5.3 Resolving Exceptions</h3>
+    <p>To resolve an exception:</p>
+    <ol>
+        <li>Navigate to the Exception Detail page</li>
+        <li>Review the discrepancy information</li>
+        <li>Select a resolution action from the available options:
+            <ul>
+                <li>Accept Match: Confirm a suggested match</li>
+                <li>Create Manual Match: Link to a different transaction</li>
+                <li>Mark as Reconciled: Indicate the exception has been handled outside the system</li>
+                <li>Flag for Review: Mark for review by another user</li>
+            </ul>
+        </li>
+        <li>Add resolution notes explaining the action taken</li>
+        <li>Click "Resolve Exception"</li>
+    </ol>
+
+    <div class="note">
+        <p>Once resolved, the exception status changes to "Resolved" and it is removed from the active exceptions list.</p>
+    </div>
+
+    <h3>5.4 AI Suggestions</h3>
+    <p>AgentRecon uses AI to analyze exceptions and suggest resolutions. The AI Suggestions Bar at the top of the Exceptions page shows how many exceptions can be automatically resolved based on previous patterns.</p>
+
+    <p>To apply AI suggestions:</p>
+    <ol>
+        <li>Review the number of suggested resolutions in the AI Suggestions Bar</li>
+        <li>Click "Apply AI Suggestions" to automatically resolve those exceptions</li>
+        <li>The system will process the suggestions and update the exceptions list</li>
+    </ol>
+
+    <p>You can also see AI recommendations for individual exceptions on their detail pages.</p>
+
+    <h2>6. Reports</h2>
+
+    <h3>6.1 Available Reports</h3>
+    <p>AgentRecon provides several standard reports:</p>
+    <ul>
+        <li>Reconciliation Summary: Overview of all reconciliation jobs</li>
+        <li>Exception Analysis: Breakdown of exceptions by type and status</li>
+        <li>Resolution Time: Analysis of time taken to resolve exceptions</li>
+        <li>Match Rate Trends: Changes in match rates over time</li>
+        <li>User Activity: Actions performed by users</li>
+    </ul>
+
+    <h3>6.2 Generating Reports</h3>
+    <p>To generate a report:</p>
+    <ol>
+        <li>Navigate to the Reports page</li>
+        <li>Select the desired report type</li>
+        <li>Set the parameters (date range, reconciliation types, etc.)</li>
+        <li>Click "Generate Report"</li>
+        <li>The report will be displayed on screen</li>
+    </ol>
+
+    <h3>6.3 Exporting Data</h3>
+    <p>To export report data:</p>
+    <ol>
+        <li>Generate the desired report</li>
+        <li>Click the "Export" button</li>
+        <li>Select the export format (Excel, CSV, PDF)</li>
+        <li>The file will be downloaded to your computer</li>
+    </ol>
+
+    <h2>7. Settings</h2>
+
+    <h3>7.1 User Profile</h3>
+    <p>To manage your user profile:</p>
+    <ol>
+        <li>Click your username in the top-right corner of the header</li>
+        <li>Select "Profile" from the dropdown menu</li>
+        <li>Update your information as needed</li>
+        <li>Click "Save Changes"</li>
+    </ol>
+
+    <h3>7.2 Data Source Mappings</h3>
+    <p>Data source mappings define how columns in your source and target files correspond to the internal data structure used by AgentRecon.</p>
+
+    <p>To view existing mappings:</p>
+    <ol>
+        <li>Navigate to the Settings page</li>
+        <li>Select "Data Source Mappings"</li>
+        <li>The page displays all available mappings</li>
+    </ol>
+
+    <div class="note">
+        <p>To create a new mapping (administrator only):</p>
+        <ol>
+            <li>Click "Create New Mapping"</li>
+            <li>Enter a name for the mapping</li>
+            <li>Select the source type (source or target)</li>
+            <li>Define column mappings by matching file headers to internal field names</li>
+            <li>Specify date format if needed</li>
+            <li>Click "Save Mapping"</li>
+        </ol>
+    </div>
+
+    <h3>7.3 System Configuration</h3>
+    <div class="note">
+        <p>System configuration options (administrator only) include:</p>
+        <ul>
+            <li>User management</li>
+            <li>Authentication settings</li>
+            <li>AI service configuration</li>
+            <li>Email notification settings</li>
+            <li>System backup and maintenance</li>
+        </ul>
+    </div>
+
+    <h2>8. Troubleshooting</h2>
+
+    <h3>8.1 Common Issues</h3>
+    <p><strong>File Upload Issues:</strong></p>
+    <ul>
+        <li>Ensure files are in a supported format (CSV, Excel, text)</li>
+        <li>Check that file size is within limits (typically 10MB)</li>
+        <li>Verify that the file structure matches the selected mapping</li>
+    </ul>
+
+    <p><strong>Reconciliation Process Issues:</strong></p>
+    <ul>
+        <li>If a job remains in PENDING status for too long, try refreshing the page</li>
+        <li>If a job fails, check the error message and ensure files are properly formatted</li>
+    </ul>
+
+    <p><strong>Exception Resolution Issues:</strong></p>
+    <ul>
+        <li>If you cannot resolve an exception, ensure you have the necessary permissions</li>
+        <li>If AI suggestions are not available, the system may need more training data</li>
+    </ul>
+
+    <h3>8.2 Error Messages</h3>
+    <p>Common error messages and their solutions:</p>
+
+    <p><strong>"File upload failed"</strong></p>
+    <ul>
+        <li>Check file format and size</li>
+        <li>Ensure you have permission to upload files</li>
+    </ul>
+
+    <p><strong>"Job not found"</strong></p>
+    <ul>
+        <li>The job ID may be incorrect</li>
+        <li>The job may have been deleted</li>
+    </ul>
+
+    <p><strong>"Failed to retrieve reconciliation results"</strong></p>
+    <ul>
+        <li>The server may be experiencing issues</li>
+        <li>Try refreshing the page or contact support</li>
+    </ul>
+
+    <h3>8.3 Support Contact Information</h3>
+    <p>If you encounter issues that cannot be resolved using this manual, please contact support:</p>
+    <ul>
+        <li>Email: support@agentrec.com</li>
+        <li>Phone: 1-800-AGENTREC</li>
+        <li>Internal Ticket System: http://helpdesk.your-company.com</li>
+    </ul>
+
+    <div class="tip">
+        <p>When contacting support, please provide:</p>
+        <ul>
+            <li>Your username</li>
+            <li>The specific page or feature where the issue occurred</li>
+            <li>Any error messages displayed</li>
+            <li>Steps to reproduce the issue</li>
+        </ul>
+    </div>
+
+    <h2>9. Glossary</h2>
+    <ul>
+        <li><strong>Reconciliation:</strong> The process of comparing transactions between different systems to ensure they match</li>
+        <li><strong>Source System:</strong> The primary system from which transactions are extracted</li>
+        <li><strong>Target System:</strong> The secondary system against which source transactions are compared</li>
+        <li><strong>Exception:</strong> A discrepancy between source and target transactions that requires resolution</li>
+        <li><strong>Mapping:</strong> The configuration that defines how columns in source and target files correspond to internal fields</li>
+        <li><strong>Match:</strong> A successful pairing of a source transaction with a target transaction</li>
+        <li><strong>Partial Match:</strong> A pairing where some but not all criteria match</li>
+        <li><strong>Resolution:</strong> The action taken to address an exception</li>
+    </ul>
+
+    <div class="no-print">
+        <p style="margin-top: 40px; text-align: center;">
+            <button onclick="window.print()">Print to PDF</button>
+        </p>
+    </div>
+</body>
+</html>

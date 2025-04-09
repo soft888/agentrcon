@@ -1,0 +1,43 @@
+# AgentRec Knowledge Base for Reconciliation Rules - Bank to General Ledger (v1.0)
+
+# --- Core Matching Criteria ---
+
+Rule KB-BG-001: Amount Exact Match
+DEFINITION: Transactions are considered an exact amount match if the absolute difference between the source internal_amount (Bank) and the target internal_amount (GL) is zero (0.00).
+
+Rule KB-BG-002: Date Exact Match
+DEFINITION: Transactions are considered an exact date match if the source internal_date (Bank) and the target internal_date (GL) are identical.
+
+Rule KB-BG-003: Basic Exact Match Condition
+CONDITION: For a transaction pair to be 'Matched', both Rule KB-BG-001 (Amount Exact Match) and Rule KB-BG-002 (Date Exact Match) must be met.
+
+# --- Tolerances and Partial Matches ---
+
+Rule KB-BG-004: Amount Tolerance
+DEFINITION: An amount tolerance of $5.00 (absolute difference) is permitted for potential partial matches.
+CONDITION: If Rule KB-BG-002 (Date Exact Match) is met, but the absolute internal_amount difference is greater than 0.00 and less than or equal to 5.00, the status is 'Partial Match'. The Exception Type should be 'Amount Tolerance'.
+
+Rule KB-BG-005: Date Tolerance
+DEFINITION: A date tolerance of 2 calendar days is permitted (GL internal_date can be up to 2 days after Bank internal_date, reflecting posting delays).
+CONDITION: If Rule KB-BG-001 (Amount Exact Match) is met, but the target internal_date is 1 or 2 days after the source internal_date, the status is 'Partial Match'. The Exception Type should be 'Date Tolerance'.
+
+# --- Exception Definitions ---
+
+Rule KB-BG-101: Amount Mismatch Exception
+CONDITION: If Rule KB-BG-002 (Date Exact Match) is met, but the absolute internal_amount difference is greater than the tolerance defined in Rule KB-BG-004 ($5.00), the status is 'Exception'. The Exception Type is 'Amount Mismatch'.
+
+Rule KB-BG-102: Date Mismatch Exception
+CONDITION: If Rule KB-BG-001 (Amount Exact Match) is met, but the internal_date difference is outside the tolerance defined in Rule KB-BG-005 (target internal_date is not same day, day+1, or day+2), the status is 'Exception'. The Exception Type is 'Date Mismatch'.
+
+Rule KB-BG-103: Missing Transaction (GL Target)
+CONDITION: If a source (Bank) transaction cannot be matched (exactly or partially based on current rules) with any available target (GL) transaction after considering tolerances, the status is 'Exception'. The Exception Type is 'Missing Transaction (Target)'.
+
+Rule KB-BG-104: Missing Transaction (Bank Source)
+CONDITION: If a target (GL) transaction remains unmatched after attempting to match all source (Bank) transactions, the status is 'Exception'. The Exception Type is 'Missing Transaction (Source)'.
+
+Rule KB-BG-105: Potential Duplicate (Requires advanced logic/AI analysis based on description/references)
+CONDITION: If multiple source transactions seem to match a single target transaction, or vice-versa, based on key identifiers beyond simple date/amount (e.g., reference numbers, check numbers, descriptions), flag as 'Exception' with Type 'Potential Duplicate'. Requires further investigation. The primary determination should still be based on date/amount unless description similarity is extremely high and explicitly allowed by another rule.
+
+# --- General Notes ---
+# - Focus on matching internal_date and internal_amount according to tolerances.
+# - internal_description fields can provide context but should not override date/amount rules unless explicitly stated.
